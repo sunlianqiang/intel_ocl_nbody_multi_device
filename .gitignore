@@ -19,3 +19,16 @@
 *.exe
 *.out
 *.app
+
+#DXUT
+common/DXUT/Optional/Win32/Debug/
+common/DXUT/Core/Win32/Debug/
+
+# NBodyMultiDevice
+NBodyMultiDevice/Win32/Debug/
+NBodyMultiDevice/lib/baseDX/Win32/Debug/
+
+# VS2010
+NBodyMultiDevice/ipch/
+*.sdf
+*.tlog

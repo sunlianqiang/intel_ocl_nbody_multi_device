@@ -235,6 +235,11 @@ void CSample_NBody::OnInitApp(StartupInfo *io_StartupInfo)
     pCombo2->AddItem( L"Intel", NULL);
     if(NULL!=GetATIOCLPlatform())
         pCombo2->AddItem( L"AMD", NULL);
+	
+	//slq 14.7.11
+	if(NULL!=GetNVOCLPlatform())
+		pCombo2->AddItem( L"NVIDIA", NULL);
+
 
     pCombo->SetSelectedByIndex(m_nOptimization);
 
@@ -291,7 +296,12 @@ void CSample_NBody::OnGUIEvent(UINT nEvent, int nControlID, CDXUTControl* pContr
 
         case IDC_PROVIDER_COMBO:
             {
-                cl_platform_id id = pUI->GetComboBox(IDC_PROVIDER_COMBO)->GetSelectedIndex() == 0 ? GetIntelOCLPlatform(): GetATIOCLPlatform();
+                //slq, ATI to NV
+				//cl_platform_id id = pUI->GetComboBox(IDC_PROVIDER_COMBO)->GetSelectedIndex() == 0 ? GetIntelOCLPlatform(): GetATIOCLPlatform();
+
+				cl_platform_id id = pUI->GetComboBox(IDC_PROVIDER_COMBO)->GetSelectedIndex() == 0 ? GetIntelOCLPlatform(): GetNVOCLPlatform();
+
+
                 pUI->GetComboBox(IDC_CPUGPU_COMBO)->RemoveAllItems();
                 bool cpu = IsCPUDevicePresented(id);
                 bool gpu = IsGPUDevicePresented(id);

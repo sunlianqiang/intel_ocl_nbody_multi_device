@@ -13,6 +13,11 @@
 
 cl_platform_id GetIntelOCLPlatform();
 cl_platform_id GetATIOCLPlatform();
+
+//slq 14.7.11
+cl_platform_id GetNVOCLPlatform();
+
+
 bool IsCPUDevicePresented(cl_platform_id );
 bool IsGPUDevicePresented(cl_platform_id );
 

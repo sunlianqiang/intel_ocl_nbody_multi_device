@@ -231,6 +231,29 @@ cl_platform_id GetATIOCLPlatform()
     return NULL;
 }
 
+cl_platform_id GetNVOCLPlatform()
+{
+	cl_platform_id pPlatforms[10] = { 0 };
+	char pPlatformName[128] = { 0 };
+
+	cl_uint uiPlatformsCount = 0;
+	cl_int err = clGetPlatformIDs(10, pPlatforms, &uiPlatformsCount);
+	for (cl_uint ui = 0; ui < uiPlatformsCount; ++ui)
+	{
+		err = clGetPlatformInfo(pPlatforms[ui], CL_PLATFORM_NAME, 128 * sizeof(char), pPlatformName, NULL);
+		if ( err != CL_SUCCESS )
+		{
+			printf("ERROR: Failed to retreive platform vendor name.\n", ui);
+			return NULL;
+		}
+
+		if (!strcmp(pPlatformName, "NVIDIA CUDA"))
+			return pPlatforms[ui];
+	}
+
+	return NULL;
+}
+
 bool IsCPUDevicePresented(cl_platform_id id)
 {
     cl_uint num = 0;
@@ -258,8 +281,11 @@ int iNBody::Setup(cl_device_type deviceType, bool SDKProviderATI)
     cl_platform_id ocl_platform;
     if(SDKProviderATI)
     {
+		//slq ATI to NV
         //find ATI platform
-        ocl_platform = GetATIOCLPlatform();
+        //ocl_platform = GetATIOCLPlatform();
+
+		ocl_platform = GetNVOCLPlatform();
     }
     else
     {
